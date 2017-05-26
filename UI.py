@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,7 +36,7 @@ class Ui_MainWindow(object):
         self.startB = QtWidgets.QPushButton(self.centralwidget)
         self.startB.setGeometry(QtCore.QRect(660, 150, 121, 191))
         self.startB.setObjectName("startB")
-        self.LogTxet = QtWidgets.QTextBrowser(self.centralwidget)
+        self.LogTxet = QtWidgets.QTextEdit(self.centralwidget)
         self.LogTxet.setGeometry(QtCore.QRect(20, 150, 631, 192))
         self.LogTxet.setObjectName("LogTxet")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
@@ -53,11 +54,30 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
-        self.startDirB.clicked.connect(self.dirBClicked)
+        self.startDirB.clicked.connect(self.startDirBClicked)
+        self.endDirB.clicked.connect(self.endDirBClicked)
+        self.startB.clicked.connect(self.startBClicked)
         
-    def dirBClicked(self):
-       dirtxt = QtWidgets.QFileDialog.getExistingDirectory(None,'Open file', 'c:/')
-       self.startDirT.setText(dirtxt)
+        
+                    
+    def startDirBClicked(self):
+        dirtxt = QtWidgets.QFileDialog.getExistingDirectory(None,'Open file', 'd:/image\miku')
+        self.startDirT.setText(dirtxt)
+       
+    def endDirBClicked(self):
+        dirtxt = QtWidgets.QFileDialog.getExistingDirectory(None,'Open file', 'c:/')
+        self.endDirT.setPlainText(dirtxt)
+       
+       
+    def startBClicked(self):
+        myDirText = self.startDirT.toPlainText()
+        filenames = os.listdir(myDirText)
+        for filename in filenames:
+            full_filename = os.path.join(myDirText, filename)
+            self.LogTxet.append(full_filename)
+           
+        
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
