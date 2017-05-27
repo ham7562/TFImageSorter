@@ -18,7 +18,7 @@ FLAGS = tf.app.flags.FLAGS
 
 
 tf.app.flags.DEFINE_string(
-    'model_dir', '/tmp/imagenet',
+    'model_dir', './tmp/imagenet',
     """Path to classify_image_graph_def.pb, """
     """imagenet_synset_to_human_label_map.txt, and """
     """imagenet_2012_challenge_label_map_proto.pbtxt.""")
