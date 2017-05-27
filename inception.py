@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 # Inception-v3 모델을 이용한 Image Classification
 
-# 절대 임포트 설정
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-# 필요한 라이브러리들을 임포트
 import os.path
 import re
 import sys
@@ -61,7 +59,6 @@ class NodeLookup(object):
     if not tf.gfile.Exists(label_lookup_path):
       tf.logging.fatal('File does not exist %s', label_lookup_path)
 
-    #  문자 UID로부터 인간이 읽을 수 있는 문자로의 맵핑을 로드함.
     proto_as_ascii_lines = tf.gfile.GFile(uid_lookup_path).readlines()
     uid_to_human = {}
     p = re.compile(r'[n\d]*[ \S,]*')
@@ -98,7 +95,6 @@ class NodeLookup(object):
 
 
 def create_graph():
-  # Creates graph from saved graph_def.pb.
   with tf.gfile.FastGFile(os.path.join(
       FLAGS.model_dir, 'classify_image_graph_def.pb'), 'rb') as f:
     graph_def = tf.GraphDef()
