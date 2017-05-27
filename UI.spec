@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['inception.py'],
-             pathex=['D:\\py\\gitTfTest'],
+a = Analysis(['UI.py'],
+             pathex=['D:\\pro\\gitTfTest'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -18,16 +18,11 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          exclude_binaries=True,
-          name='inception',
+          a.binaries,
+          a.zipfiles,
+          a.datas,
+          name='UI',
           debug=False,
           strip=False,
           upx=True,
-          console=True )
-coll = COLLECT(exe,
-               a.binaries,
-               a.zipfiles,
-               a.datas,
-               strip=False,
-               upx=True,
-               name='inception')
+          console=False )
