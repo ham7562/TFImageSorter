@@ -8,6 +8,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
+import inception
+import shutil
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -61,7 +63,7 @@ class Ui_MainWindow(object):
         
                     
     def startDirBClicked(self):
-        dirtxt = QtWidgets.QFileDialog.getExistingDirectory(None,'Open file', 'd:/image\miku')
+        dirtxt = QtWidgets.QFileDialog.getExistingDirectory(None,'Open file', 'c:/')
         self.startDirT.setText(dirtxt)
        
     def endDirBClicked(self):
@@ -70,12 +72,26 @@ class Ui_MainWindow(object):
        
        
     def startBClicked(self):
-        myDirText = self.startDirT.toPlainText()
-        filenames = os.listdir(myDirText)
+        inception.maybe_download_and_extract()
+        startDirText = self.startDirT.toPlainText()
+        endDirText = self.endDirT.toPlainText()
+        filenames = os.listdir(startDirText)
         for filename in filenames:
-            full_filename = os.path.join(myDirText, filename)
+            full_filename = os.path.join(startDirText, filename)
             self.LogTxet.append(full_filename)
-           
+            inception.run_other_program_on_image(full_filename)
+            f = open("image.log.txt",'r')
+            while True:
+                line = f.readline()
+                if not line: break
+                self.LogTxet.append(line)
+                if os.path.isdir(endDirText + '/' + line):
+                    shutil.move(full_filename,endDirText + '/' + line +'/' + filename)
+                else:
+                    os.mkdir(endDirText + '/' + line)
+                    shutil.move(full_filename,endDirText + '/' + line +'/' + filename)
+            f.close()
+            os.remove("image.log.txt")
         
         
 
