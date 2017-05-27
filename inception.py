@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Inception-v3 모델을 이용한 Image Classification
 
 from __future__ import absolute_import
 from __future__ import division
@@ -47,13 +46,6 @@ class NodeLookup(object):
     self.node_lookup = self.load(label_lookup_path, uid_lookup_path)
 
   def load(self, label_lookup_path, uid_lookup_path):
-    """각각의 softmax node에 대해 인간이 읽을 수 있는 영어 단어를 로드 함.
-    Args:
-      label_lookup_path: 정수 node ID에 대한 문자 UID.
-      uid_lookup_path: 인간이 읽을 수 있는 문자에 대한 문자 UID.
-    Returns:
-      정수 node ID로부터 인간이 읽을 수 있는 문자에 대한 dict.
-    """
     if not tf.gfile.Exists(uid_lookup_path):
       tf.logging.fatal('File does not exist %s', uid_lookup_path)
     if not tf.gfile.Exists(label_lookup_path):
@@ -144,7 +136,6 @@ def run_inference_on_image(image):
 
 
 def maybe_download_and_extract():
-  """Download and extract model tar file."""
   dest_directory = FLAGS.model_dir
   if not os.path.exists(dest_directory):
       os.makedirs(dest_directory)
