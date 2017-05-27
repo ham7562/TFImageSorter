@@ -20,7 +20,7 @@ FLAGS = tf.app.flags.FLAGS
 
 
 tf.app.flags.DEFINE_string(
-    'model_dir', '/tmp/imagenet',
+    'model_dir', './tmp/imagenet',
     """Path to classify_image_graph_def.pb, """
     """imagenet_synset_to_human_label_map.txt, and """
     """imagenet_2012_challenge_label_map_proto.pbtxt.""")
@@ -61,7 +61,6 @@ class NodeLookup(object):
     if not tf.gfile.Exists(label_lookup_path):
       tf.logging.fatal('File does not exist %s', label_lookup_path)
 
-    #  문자 UID로부터 인간이 읽을 수 있는 문자로의 맵핑을 로드함.
     proto_as_ascii_lines = tf.gfile.GFile(uid_lookup_path).readlines()
     uid_to_human = {}
     p = re.compile(r'[n\d]*[ \S,]*')
@@ -98,7 +97,6 @@ class NodeLookup(object):
 
 
 def create_graph():
-  # Creates graph from saved graph_def.pb.
   with tf.gfile.FastGFile(os.path.join(
       FLAGS.model_dir, 'classify_image_graph_def.pb'), 'rb') as f:
     graph_def = tf.GraphDef()
